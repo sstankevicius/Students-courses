@@ -26,20 +26,18 @@ public class Student {
 		this.gradeYear = in.nextInt();
 
 		setStudetId();
-
-		System.out.println(firstName + " " + lastName + "\nGrade year: " + gradeYear + "\nStudent ID: " + studentID);
-
 	}
 
 	// Generate an ID
 	private void setStudetId() {
 		id++;
 		studentID = gradeYear + "" + id;
+		System.out.println(studentID);
 	}
 
 	public void menu() {
 		Scanner in = new Scanner(System.in);
-		System.out.println("1 - Enroll new courses\n2 - View Balance\n3 - Pay tuition\n4 - Show info");
+		System.out.println("1 - Enroll new courses\n2 - View Balance\n3 - Pay tuition\n4 - Exit/Save Student info");
 		int menuChoise = in.nextInt();
 		if (menuChoise == 1) {
 			enroll();
@@ -48,12 +46,12 @@ public class Student {
 			viewBalane();
 		}
 		else if (menuChoise == 3) {
-			Scanner in2 = new Scanner(System.in);
 			System.out.println("How much you would like to pay?");
-			int payment = in2.nextInt();
+			int payment = in.nextInt();
 			payTuition(payment);
 		}
 		else if (menuChoise == 4) {
+			System.out.println("Student info saved\n");
 			showInfo();
 		}else {
 			menu();
@@ -76,22 +74,16 @@ public class Student {
 		} while (1 != 0);
 
 		System.out.println("ENROLLED IN: " + courses);
-		System.out.println("TUITION BALANCE: " + tuitionBalance);
-		Scanner in3 = new Scanner(System.in);
-		System.out.println("Back to the menu press (B)");
-		String back = in3.nextLine();
-		if (back.equals("B")) {
-			menu();
-		}
+		viewBalane();
 	}
 	
 	//View Balance
 	private void viewBalane() {
 		System.out.println("Your balance is: $" + tuitionBalance);
-		Scanner in3 = new Scanner(System.in);
+		Scanner in = new Scanner(System.in);
 		System.out.println("Back to the menu press (B)");
-		String back = in3.nextLine();
-		if (back.equals("B")) {
+		String back = in.nextLine();
+		if (back.equals("B") || back.equals("b")) {
 			menu();
 		}
 	}
@@ -100,26 +92,16 @@ public class Student {
 	private void payTuition(int payment) {
 		tuitionBalance = tuitionBalance - payment;
 		System.out.println("Thank you for your payment of $" + payment);
-		Scanner in3 = new Scanner(System.in);
-		System.out.println("Back to the menu press (B)");
-		String back = in3.nextLine();
-		if (back.equals("B")) {
-			menu();
-		}
+		viewBalane();
 	}
 	// Show status
-	private void showInfo() {
-		System.out.println("Student: " + firstName + " " + lastName);
-		System.out.println("Grade Year: " + gradeYear);
-		System.out.println("Student ID: " + studentID);
-		System.out.println("Courses enrolled: " + courses);
-		System.out.println("Balance to pay: " + tuitionBalance);
-		
-		Scanner in3 = new Scanner(System.in);
-		System.out.println("Back to the menu press (B)");
-		String back = in3.nextLine();
-		if (back.equals("B")) {
-			menu();
-		}
+	
+	private String showInfo() {
+		return "Name: " + firstName + " " + " " + lastName +
+				"\nCourses Enrolled: " + courses +
+				"\nBalance: $" + tuitionBalance + "\n";
+	}
+	public String toString() {
+		return showInfo();
 	}
 }
